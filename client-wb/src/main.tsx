@@ -1,8 +1,9 @@
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
-import { BrowserRouter, Route, Routes } from "react-router"
+import "@fontsource/atkinson-hyperlegible-mono/400.css"
+import "@fontsource/atkinson-hyperlegible-mono/700.css"
 import "@/assets/styles/globals.css"
-import { App } from "./App.tsx"
+import { App } from "./app.tsx"
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client"
 
 const client = new ApolloClient({
@@ -13,11 +14,7 @@ const client = new ApolloClient({
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
 		<ApolloProvider client={client}>
-			<BrowserRouter>
-				<Routes>
-					<Route path="/" element={<App />} />
-				</Routes>
-			</BrowserRouter>
+			<App />
 		</ApolloProvider>
 	</StrictMode>
 )

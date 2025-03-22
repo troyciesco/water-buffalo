@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+@theme {
+	--font-mono: "Atkinson Hyperlegible Mono", monospace;
+}
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+body {
+	@apply font-mono dark:bg-slate-900 dark:text-white;
+}

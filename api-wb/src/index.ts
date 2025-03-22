@@ -8,7 +8,12 @@ export const graphql = {
 			return "Hello, world!"
 		},
 		allCategories: () => {
-			return catalogPayload.categories
+			return catalogPayload.categories.map((category) => ({
+				...category,
+				items: catalogPayload.items.filter(
+					(item) => item.category === category.id
+				)
+			}))
 		},
 		categoryById: (id: string) => {
 			return catalogPayload.categories.find((category) => id === category.id)

@@ -1,34 +1,37 @@
-import { useQuery, gql } from "@apollo/client"
-import { Foo } from "@/components/foo"
+// import { useQuery, gql } from "@apollo/client"
+import { BrowserRouter, Route, Routes } from "react-router"
+import { LoginPage } from "./pages/login"
+import { DashboardPage } from "./pages/dashboard"
+import { WorkflowsPage } from "./pages/workflows"
+import { WorkflowPage } from "./pages/workflows/[id]"
+import { DashboardLayout } from "./layouts/dashboard-layout"
 
-const GET_ALL_ITEMS = gql`
-	query GetAllItems {
-		allItems {
-			name
-			category {
-				id
-				name
-			}
-		}
-	}
-`
-// const GET_HELLO = gql`
-// 	query GetHello {
-// 		hello
+// const GET_ALL_ITEMS = gql`
+// 	query GetAllItems {
+// 		allItems {
+// 			name
+// 			category {
+// 				id
+// 				name
+// 			}
+// 		}
 // 	}
 // `
 
 export function App() {
-	const { loading, error, data } = useQuery(GET_ALL_ITEMS)
-
-	if (loading) return <p>Loading...</p>
-	if (error) return <p>Error : {error.message}</p>
-
 	return (
-		<div>
-			<div>hello world</div>
-			<Foo />
-			<pre>{JSON.stringify(data, null, 2)}</pre>
-		</div>
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<LoginPage />} />
+				<Route path="/login" element={<LoginPage />} />
+				<Route element={<DashboardLayout />}>
+					<Route path="/dashboard" element={<DashboardPage />} />
+					<Route path="workflows">
+						<Route index element={<WorkflowsPage />} />
+						<Route path=":id" element={<WorkflowPage />} />
+					</Route>
+				</Route>
+			</Routes>
+		</BrowserRouter>
 	)
 }

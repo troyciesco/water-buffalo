@@ -7,6 +7,10 @@ export const catalogPayload: CatalogPayload = {
 			name: "Data Entry"
 		},
 		{
+			id: "cat-measurements",
+			name: "Measurements"
+		},
+		{
 			id: "cat-photos",
 			name: "Photos"
 		},
