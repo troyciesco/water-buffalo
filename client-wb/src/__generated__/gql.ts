@@ -14,10 +14,10 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\n\tquery GetAllCategories {\n\t\tallCategories {\n\t\t\tid\n\t\t\tname\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tdescription\n\t\t\t\tcategory\n\t\t\t}\n\t\t}\n\t}\n": typeof types.GetAllCategoriesDocument,
+    "\n\tquery GetAllCategories {\n\t\tallCategories {\n\t\t\tid\n\t\t\tname\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tdescription\n\t\t\t\tcategory: categoryId\n\t\t\t}\n\t\t}\n\t}\n": typeof types.GetAllCategoriesDocument,
 };
 const documents: Documents = {
-    "\n\tquery GetAllCategories {\n\t\tallCategories {\n\t\t\tid\n\t\t\tname\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tdescription\n\t\t\t\tcategory\n\t\t\t}\n\t\t}\n\t}\n": types.GetAllCategoriesDocument,
+    "\n\tquery GetAllCategories {\n\t\tallCategories {\n\t\t\tid\n\t\t\tname\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tdescription\n\t\t\t\tcategory: categoryId\n\t\t\t}\n\t\t}\n\t}\n": types.GetAllCategoriesDocument,
 };
 
 /**
@@ -37,7 +37,7 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n\tquery GetAllCategories {\n\t\tallCategories {\n\t\t\tid\n\t\t\tname\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tdescription\n\t\t\t\tcategory\n\t\t\t}\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery GetAllCategories {\n\t\tallCategories {\n\t\t\tid\n\t\t\tname\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tdescription\n\t\t\t\tcategory\n\t\t\t}\n\t\t}\n\t}\n"];
+export function gql(source: "\n\tquery GetAllCategories {\n\t\tallCategories {\n\t\t\tid\n\t\t\tname\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tdescription\n\t\t\t\tcategory: categoryId\n\t\t\t}\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery GetAllCategories {\n\t\tallCategories {\n\t\t\tid\n\t\t\tname\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tdescription\n\t\t\t\tcategory: categoryId\n\t\t\t}\n\t\t}\n\t}\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

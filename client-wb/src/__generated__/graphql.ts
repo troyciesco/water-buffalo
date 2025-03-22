@@ -28,44 +28,45 @@ export type Scalars = {
   Void: { input: any; output: any; }
 };
 
-export type AllCategories = {
-  __typename?: 'AllCategories';
+export type AllCategoriesAndAllCategories_1 = {
+  __typename?: 'AllCategoriesAndAllCategories_1';
   id: Scalars['String']['output'];
-  items: Array<CategoryItem>;
+  items: Array<ItemsAndAllItems_1>;
   name: Scalars['String']['output'];
 };
 
-export type AllItems = {
-  __typename?: 'AllItems';
-  category?: Maybe<Category>;
+export type AllItemsAndAllItems_1 = {
+  __typename?: 'AllItemsAndAllItems_1';
+  category: CategoryById;
+  categoryId: Scalars['String']['output'];
   description: Scalars['String']['output'];
   icon?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
-  tags: Array<Scalars['String']['output']>;
+  tags: Array<Tags>;
 };
 
-export type Category = {
-  __typename?: 'Category';
+export type CategoryById = {
+  __typename?: 'CategoryById';
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
 };
 
-export type CategoryItem = {
-  __typename?: 'CategoryItem';
-  category: Scalars['String']['output'];
+export type ItemsAndAllItems_1 = {
+  __typename?: 'ItemsAndAllItems_1';
+  categoryId: Scalars['String']['output'];
   description: Scalars['String']['output'];
   icon?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
-  tags: Array<Scalars['String']['output']>;
+  tags: Array<Tags>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  allCategories: Array<AllCategories>;
-  allItems: Array<AllItems>;
-  categoryById?: Maybe<Category>;
+  allCategories: Array<AllCategoriesAndAllCategories_1>;
+  allItems: Array<AllItemsAndAllItems_1>;
+  categoryById?: Maybe<CategoryById>;
   hello: Scalars['String']['output'];
 };
 
@@ -74,10 +75,17 @@ export type QueryCategoryByIdArgs = {
   id: Scalars['String']['input'];
 };
 
+export type Tags = {
+  __typename?: 'Tags';
+  aliases: Array<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  primary: Scalars['String']['output'];
+};
+
 export type GetAllCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllCategoriesQuery = { __typename?: 'Query', allCategories: Array<{ __typename?: 'AllCategories', id: string, name: string, items: Array<{ __typename?: 'CategoryItem', id: string, name: string, description: string, category: string }> }> };
+export type GetAllCategoriesQuery = { __typename?: 'Query', allCategories: Array<{ __typename?: 'AllCategoriesAndAllCategories_1', id: string, name: string, items: Array<{ __typename?: 'ItemsAndAllItems_1', id: string, name: string, description: string, category: string }> }> };
 
 
-export const GetAllCategoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllCategories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allCategories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"category"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllCategoriesQuery, GetAllCategoriesQueryVariables>;
+export const GetAllCategoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllCategories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allCategories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","alias":{"kind":"Name","value":"category"},"name":{"kind":"Name","value":"categoryId"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllCategoriesQuery, GetAllCategoriesQueryVariables>;

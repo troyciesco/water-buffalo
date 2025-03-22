@@ -16,7 +16,7 @@ const GET_ALL_CATEGORIES = gql(/* GraphQL */ `
 				id
 				name
 				description
-				category
+				category: categoryId
 			}
 		}
 	}
@@ -58,14 +58,24 @@ export default function ModalContent({
 	useEffect(() => {
 		if (!items || !categories) return
 
+		let initialItems = [...items]
+
 		if (selectedCategoryId) {
-			setFilteredItems(
-				items.filter((item) => item.category === selectedCategoryId)
+			initialItems = initialItems.filter(
+				(item) => item.category === selectedCategoryId
 			)
-		} else {
-			setFilteredItems(items)
 		}
-	}, [items, categories, selectedCategoryId])
+
+		if (searchString) {
+			initialItems = initialItems.filter(
+				(item) =>
+					item.name.includes(searchString) ||
+					item.description.includes(searchString)
+			)
+		}
+
+		setFilteredItems(initialItems)
+	}, [items, categories, selectedCategoryId, searchString])
 
 	const handleClick = () => {
 		onSubmit(selectedItem)
@@ -88,6 +98,9 @@ export default function ModalContent({
 						type="text"
 						placeholder="Search"
 						className="border p-2 bg-white dark:bg-gray-800"
+						name="search"
+						value={searchString}
+						onChange={(e) => setSearchString(e.target.value)}
 					/>
 				</div>
 				<div className="bg-white dark:bg-gray-800 relative border z-20 pb-4 flex w-full max-h-[340px] overflow-y-scroll">
@@ -128,6 +141,11 @@ export default function ModalContent({
 						{/* {loading && <div>loading</div>}
 						{error && <div>error :(</div>} */}
 						<div className="grid grid-cols-2 gap-8">
+							{filteredItems.length === 0 && (
+								<div className="col-span-2 w-[712px] max-w-full">
+									No items match the search criteria
+								</div>
+							)}
 							{filteredItems.map((item) => (
 								<button
 									key={item.id}
@@ -177,38 +195,41 @@ export function WorkflowPage() {
 	const [showModal, setShowModal] = useState(false)
 	const [items, setItems] = useState<Item[]>([])
 	return (
-		<div className="p-4">
-			<div className="text-3xl mb-8">Workflow {params.id}</div>
-			<div className="grid grid-cols-6">
-				<div className="mb-4 p-4 border bg-gray-100 dark:bg-gray-800 flex flex-col">
-					{items.length === 0 ? (
-						<div>No items added yet</div>
-					) : (
-						<Reorder.Group
-							axis="y"
-							values={items}
-							onReorder={setItems}
-							className="flex flex-col space-y-2">
-							<AnimatePresence>
-								{items.map((item) => (
-									<Reorder.Item
-										key={item.id}
-										value={item}
-										className="p-2 border bg-gray-50 dark:bg-gray-700 cursor-grab"
-										initial={{ opacity: 0 }}
-										animate={{ opacity: 1 }}
-										exit={{ opacity: 0 }}>
-										{item.name}
-									</Reorder.Item>
-								))}
-							</AnimatePresence>
-						</Reorder.Group>
-					)}
-					<button
-						onClick={() => setShowModal(true)}
-						className="px-2 py-1 text-sm bg-green-300 dark:bg-green-400 dark:text-slate-900 border cursor-pointer mt-4 self-end">
-						Add new item +
-					</button>
+		<div className="flex flex-col h-full">
+			<div className="text-3xl border-b p-4">Workflow {params.id}</div>
+			{/* https://stackoverflow.com/questions/55364127/making-a-dotted-grid-with-css */}
+			<div className="p-4 grow bg-white [background-image:radial-gradient(#94a3b8_1px,transparent_0)] [background-size:30px_30px] [background-position:-8px_-8px]">
+				<div className="grid grid-cols-6 ">
+					<div className="mb-4 p-4 border bg-gray-100 dark:bg-gray-800 flex flex-col">
+						{items.length === 0 ? (
+							<div>No items added yet</div>
+						) : (
+							<Reorder.Group
+								axis="y"
+								values={items}
+								onReorder={setItems}
+								className="flex flex-col space-y-2">
+								<AnimatePresence>
+									{items.map((item) => (
+										<Reorder.Item
+											key={item.id}
+											value={item}
+											className="p-2 border bg-gray-50 dark:bg-gray-700 cursor-grab"
+											initial={{ opacity: 0 }}
+											animate={{ opacity: 1 }}
+											exit={{ opacity: 0 }}>
+											{item.name}
+										</Reorder.Item>
+									))}
+								</AnimatePresence>
+							</Reorder.Group>
+						)}
+						<button
+							onClick={() => setShowModal(true)}
+							className="px-2 py-1 text-sm bg-green-300 dark:bg-green-400 dark:text-slate-900 border cursor-pointer mt-4 self-end">
+							Add new item +
+						</button>
+					</div>
 				</div>
 			</div>
 

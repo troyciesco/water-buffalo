@@ -1,29 +1,34 @@
 import { app } from "@getcronit/pylon"
 import { serve } from "@hono/node-server"
-import { catalogPayload } from "./catalog-payload"
+import { prisma } from "~/prisma/client"
 
 export const graphql = {
 	Query: {
 		hello: () => {
 			return "Hello, world!"
 		},
-		allCategories: () => {
-			return catalogPayload.categories.map((category) => ({
-				...category,
-				items: catalogPayload.items.filter(
-					(item) => item.category === category.id
-				)
-			}))
+		allCategories: async () => {
+			return await prisma.category.findMany({
+				include: { items: { include: { tags: true } } }
+			})
 		},
-		categoryById: (id: string) => {
-			return catalogPayload.categories.find((category) => id === category.id)
+		categoryById: async (id: string) => {
+			return await prisma.category.findUnique({ where: { id } })
 		},
-		allItems: () => {
-			return catalogPayload.items.map((item) => ({
-				...item,
-				category: catalogPayload.categories.find((c) => c.id === item.category)
-			}))
+		allItems: async () => {
+			return await prisma.categoryItem.findMany({
+				include: { category: true, tags: true }
+			})
 		}
+		// allCategories: async () => {
+		// 	return await Category.getAll()
+		// },
+		// categoryById: async (id: string) => {
+		// 	return await Category.getById(id)
+		// },
+		// allItems: async () => {
+		// 	return await CategoryItem.getAll()
+		// }
 	},
 	Mutation: {}
 }
