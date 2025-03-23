@@ -7,8 +7,7 @@
 	"scripts": {
 		"dev": "pylon dev -c \"node --enable-source-maps .pylon/index.js\"",
 		"build": "pylon build",
-		"seed": "bunx prisma migrate reset --force && bun prisma/seed.ts",
-		"gen-models": "bunx @getcronit/prisma-extended-models generate"
+		"seed": "bunx prisma migrate reset --force && bun prisma/seed.ts"
 	},
 	"dependencies": {
 		"@getcronit/prisma-extended-models": "^0.0.42",

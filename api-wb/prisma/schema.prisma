@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -18,27 +12,69 @@ model Category {
   name String
 
   items CategoryItem[]
+  steps Step[]
 
   @@map("category")
 }
 
 model CategoryItem {
-  id          String   @id
+  id          String  @id
   name        String
   description String
   icon        String?
-  category    Category @relation(fields: [categoryId], references: [id])
   categoryId  String
-  tags        Tag[]
+
+  category Category @relation(fields: [categoryId], references: [id])
+  tags     Tag[]
 
   @@map("category_item")
 }
 
 model Tag {
-  id      String         @id
+  id      String @id
   primary String
-  aliases String         @default("")
-  items   CategoryItem[]
+  aliases String @default("")
+
+  items CategoryItem[]
+  steps Step[]
 
   @@map("tag")
+}
+
+model Workflow {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  stages Stage[]
+}
+
+model Stage {
+  id         Int    @id @default(autoincrement())
+  name       String
+  workflowId Int
+
+  workflow Workflow @relation(fields: [workflowId], references: [id])
+  steps    Step[]
+
+  @@unique([name, workflowId])
+  @@map("stage")
+}
+
+// Step is close to identical to CategoryItem, but I'm thinking of
+// CategoryItems as templates for creating a step, basically.
+model Step {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String
+  icon        String?
+  order       Int
+  stageId     Int
+  categoryId  String
+
+  stage    Stage    @relation(fields: [stageId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
+  tags     Tag[]
+
+  // this assumes steps are never handled in tandem
+  @@unique([stageId, order])
+  @@map("step")
 }

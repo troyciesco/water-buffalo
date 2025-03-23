@@ -8,3 +8,11 @@
 body {
 	@apply font-mono dark:bg-slate-900 dark:text-white;
 }
+
+@utility btn {
+	@apply disabled:cursor-not-allowed disabled:text-slate-600 px-3 py-2 border cursor-pointer;
+}
+
+@utility btn-primary {
+	@apply btn dark:bg-green-400 dark:text-slate-800 disabled:bg-gray-400 bg-green-200 transition-all hover:bg-green-500;
+}

@@ -6,18 +6,6 @@ import { WorkflowsPage } from "./pages/workflows"
 import { WorkflowPage } from "./pages/workflows/[id]"
 import { DashboardLayout } from "./layouts/dashboard-layout"
 
-// const GET_ALL_ITEMS = gql`
-// 	query GetAllItems {
-// 		allItems {
-// 			name
-// 			category {
-// 				id
-// 				name
-// 			}
-// 		}
-// 	}
-// `
-
 export function App() {
 	return (
 		<BrowserRouter>
