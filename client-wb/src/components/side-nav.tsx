@@ -1,24 +1,16 @@
-import { useToast } from "@/lib/toast"
-import { CREATE_WORKFLOW, GET_ALL_WORKFLOWS } from "@/queries"
-import { useMutation, useQuery } from "@apollo/client"
-import { faker } from "@faker-js/faker"
+import { useCreateWorkflow } from "@/hooks/use-create-workflow"
+import { GET_ALL_WORKFLOWS } from "@/queries"
+import { useQuery } from "@apollo/client"
 import { Link } from "react-router"
 
 export function SideNav() {
+	const { createWorkflow } = useCreateWorkflow()
 	const { loading, error, data, refetch } = useQuery(GET_ALL_WORKFLOWS)
-	const { showToast } = useToast()
-	const [createWorkflow] = useMutation(CREATE_WORKFLOW, {
-		variables: { payload: { name: faker.science.chemicalElement().name } },
-		refetchQueries: [GET_ALL_WORKFLOWS],
-		onCompleted: (data) => {
-			showToast(`Workflow created: ${data.createWorkflow.name}`)
-		}
-	})
 
 	const workflows = data?.allWorkflows || []
 
 	return (
-		<aside className="w-72 border-r divide-y divide-gray-400">
+		<aside className="w-60 h-[calc(100svh-81px-57px)] border-r divide-y divide-gray-400 overflow-y-scroll">
 			<div className="py-4 pr-16 pl-4">
 				<Link to="/dashboard" className="hover:underline font-bold">
 					Dashboard

@@ -2,11 +2,8 @@ import { AnimatePresence } from "motion/react"
 import { motion } from "motion/react"
 import { Popover } from "radix-ui"
 import { StageForm } from "@/components/stage-form"
-import { useParams } from "react-router"
 
-export function AddStageBtn() {
-	const params = useParams()
-
+export function AddStageBtn({ workflowId }: { workflowId: number }) {
 	return (
 		<Popover.Root modal>
 			<Popover.Trigger asChild>
@@ -22,13 +19,14 @@ export function AddStageBtn() {
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
 							exit={{ opacity: 0 }}
-							className="dark:bg-slate-800 p-4 bg-white border shadow-md">
-							<div className="flex justify-end w-full">
-								<Popover.Close>X</Popover.Close>
-							</div>
+							className="relative shadow-md">
+							<Popover.Close className="absolute top-2 right-4 cursor-pointer">
+								X
+							</Popover.Close>
 							<StageForm
-								title="Create the next stage"
-								workflowId={parseInt(params.id as string)}
+								title="Create stage"
+								key={workflowId}
+								workflowId={workflowId}
 							/>
 						</motion.div>
 					</Popover.Content>

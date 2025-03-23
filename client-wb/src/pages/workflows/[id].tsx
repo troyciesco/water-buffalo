@@ -2,13 +2,13 @@ import { useParams } from "react-router"
 import { createPortal } from "react-dom"
 import { useState } from "react"
 import { useMutation, useQuery } from "@apollo/client"
-import { AnimatePresence, Reorder } from "motion/react"
+import { AnimatePresence } from "motion/react"
 import { CREATE_STEP, GET_WORKFLOW } from "@/queries"
 import { Modal } from "@/components/modal"
 import { NotFound } from "@/components/not-found"
 import { StageForm } from "@/components/stage-form"
-import { AddStageBtn } from "@/components/add-stage-btn"
 import { PageHeader } from "@/components/page-header"
+import { StagePanel } from "@/components/stage-panel"
 
 export function WorkflowPage() {
 	const params = useParams()
@@ -38,52 +38,19 @@ export function WorkflowPage() {
 	return (
 		<div className="flex flex-col h-full">
 			<PageHeader title={`Workflow: ${workflow.name}`} />
-			{/* https://stackoverflow.com/questions/55364127/making-a-dotted-grid-with-css */}
-			<div className="p-4 grow bg-white dark:bg-slate-900 [background-image:radial-gradient(#94a3b8_1px,transparent_0)] [background-size:30px_30px] [background-position:-8px_-8px]">
+			<div className="grow bg-light dark:bg-dark dotted-bg p-4">
 				{workflow.stages.length === 0 ? (
-					<StageForm workflowId={parseInt(params.id as string)} />
+					<StageForm key={workflow.id} workflowId={workflow.id} />
 				) : (
 					<div className="grid grid-cols-5 gap-8 w-full">
 						{workflow.stages.map((stage, index) => (
-							<div
+							<StagePanel
 								key={`${stage.id}-${stage.name}`}
-								className="dark:bg-gray-800 flex relative flex-col p-4 mb-4 bg-gray-100 border">
-								<div className="mb-4 text-lg font-bold">
-									Stage: {stage.name}
-								</div>
-								{stage.steps.length === 0 ? (
-									<div>No items added yet</div>
-								) : (
-									<>
-										<Reorder.Group
-											axis="y"
-											values={stage.steps}
-											// onReorder={setItems}
-											onReorder={() => {}}
-											className="flex flex-col space-y-2">
-											<AnimatePresence>
-												{stage.steps.map((step) => (
-													<Reorder.Item
-														key={step.id}
-														value={step}
-														className="dark:bg-gray-700 cursor-grab p-2 bg-gray-50 border"
-														initial={{ opacity: 0 }}
-														animate={{ opacity: 1 }}
-														exit={{ opacity: 0 }}>
-														{step.name}
-													</Reorder.Item>
-												))}
-											</AnimatePresence>
-										</Reorder.Group>
-										{index === workflow.stages.length - 1 && <AddStageBtn />}
-									</>
-								)}
-								<button
-									onClick={() => setStagePendingStep(stage.id)}
-									className="btn-primary self-end mt-4">
-									Add new item +
-								</button>
-							</div>
+								stage={stage}
+								workflowId={workflow.id}
+								isLastStage={index === workflow.stages.length - 1}
+								onClick={(stageId) => setStagePendingStep(stageId)}
+							/>
 						))}
 					</div>
 				)}

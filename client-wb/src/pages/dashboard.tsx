@@ -10,14 +10,18 @@ export function DashboardPage() {
 				action={
 					<p>
 						* As far as we know{" "}
-						<span className="p-1 bg-white rounded-full">🐃</span>
+						<span className="bg-primary-base p-1 rounded-full">🐃</span>
 					</p>
 				}
 			/>
 			<p className="text-xl"></p>
-			<div className="flex flex-col">
-				<Link to="/workflows">workflows</Link>
-				<Link to="/workflows/234523">workflows 234523</Link>
+			<div className="flex flex-col gap-8 p-4">
+				<Link to="/workflows" className="text-3xl underline">
+					view all workflows
+				</Link>
+				<Link to="/workflows/999999" className="text-3xl underline">
+					view 404 page
+				</Link>
 			</div>
 		</div>
 	)

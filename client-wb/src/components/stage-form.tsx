@@ -1,50 +1,54 @@
-import { useState } from "react"
+import { FormEvent, useState } from "react"
 import { useMutation } from "@apollo/client"
 import { CREATE_STAGE, GET_WORKFLOW } from "@/queries"
+import { Form } from "./form"
+import { Input } from "./input"
+import { FormErrors } from "@/types"
 
 export function StageForm({
-	title = "Create a stage",
+	title = "Create a Stage",
 	workflowId
 }: {
 	title?: string
 	workflowId: number
 }) {
-	const [stageName, setStageName] = useState("")
+	const [errors, setErrors] = useState<FormErrors<(typeof fields)[number]>>({})
 	const [createStage] = useMutation(CREATE_STAGE, {
-		variables: {
-			payload: { name: stageName, workflowId }
-		},
-		refetchQueries: [GET_WORKFLOW]
+		refetchQueries: [GET_WORKFLOW],
+		onCompleted: () => setErrors({})
 	})
 
-	const handleSubmit = (e: React.FormEvent) => {
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const fields = ["stageName"]
+
+	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		createStage()
-		setStageName("")
+		const formData = new FormData(e.currentTarget)
+		const stageName = formData.get("stageName")?.toString() || ""
+		createStage({
+			variables: {
+				payload: { name: stageName, workflowId }
+			}
+		})
 	}
 
 	return (
-		<div className="dark:bg-slate-900 p-4 max-w-sm bg-white border">
-			<div className="mb-4">{title}</div>
-			<form className="flex flex-col gap-4 items-start" onSubmit={handleSubmit}>
-				<label>
-					<div className="sr-only">name</div>
-					<input
-						type="text"
-						name="name"
-						value={stageName}
-						className="p-2 border"
-						placeholder="Stage Name"
-						onChange={(e) => setStageName(e.target.value)}
-					/>
-				</label>
-				<button
-					onClick={handleSubmit}
-					disabled={!stageName}
-					className="btn-primary">
-					Create Stage
-				</button>
-			</form>
+		<div className="dark:bg-slate-900 px-4 py-6 max-w-sm bg-white border">
+			<Form
+				onSubmit={handleSubmit}
+				buttonText="Create Stage"
+				isButtonDisabled={false}
+				errors={errors.general || []}>
+				<h2 className="mb-4 text-xl font-bold">{title}</h2>
+				<Input
+					type="text"
+					name="stageName"
+					label="Stage Name"
+					placeholder="Alpha"
+					required
+					errors={errors.stageName || []}
+				/>
+			</Form>
 		</div>
 	)
 }

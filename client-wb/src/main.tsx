@@ -1,6 +1,7 @@
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 import "@fontsource/atkinson-hyperlegible-mono/400.css"
+import "@fontsource/atkinson-hyperlegible-mono/500.css"
 import "@fontsource/atkinson-hyperlegible-mono/700.css"
 import "@/assets/styles/globals.css"
 import { App } from "./app.tsx"

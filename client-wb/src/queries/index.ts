@@ -5,6 +5,9 @@ export const GET_ALL_WORKFLOWS = gql(/* GraphQL */ `
 		allWorkflows {
 			id
 			name
+			stages {
+				id
+			}
 		}
 	}
 `)

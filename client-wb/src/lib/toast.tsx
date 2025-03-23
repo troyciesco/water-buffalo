@@ -10,8 +10,9 @@ import {
 	useState
 } from "react"
 
+type AlertType = "success" | "error" | "info"
 const ToastContext = createContext<{
-	showToast: (text: string) => void
+	showToast: ({ text, type }: { text: string; type: AlertType }) => void
 }>({
 	showToast: () => {
 		throw new Error(
@@ -26,14 +27,17 @@ export function useToast() {
 }
 
 export function ToastProvider({ children }: { children: ReactNode }) {
-	const [messages, setMessages] = useState<{ id: string; text: string }[]>([])
+	const [messages, setMessages] = useState<
+		{ id: string; text: string; type: AlertType }[]
+	>([])
 
-	function showToast(text: string) {
+	function showToast({ text, type }: { text: string; type: AlertType }) {
 		setMessages((toasts) => [
 			...toasts,
 			{
 				id: window.crypto.randomUUID(),
-				text
+				text,
+				type
 			}
 		])
 	}
@@ -49,6 +53,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 					<Toast
 						key={toast.id}
 						text={toast.text}
+						type={toast.type}
 						onClose={() =>
 							setMessages((toasts) => toasts.filter((t) => t.id !== toast.id))
 						}
@@ -56,7 +61,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 				))}
 			</AnimatePresence>
 
-			<RadixToast.Viewport className="max-sm:top-20 flex fixed top-4 right-4 flex-col-reverse gap-3 w-80" />
+			<RadixToast.Viewport className="max-sm:top-20 flex fixed top-4 left-1/2 flex-col-reverse gap-3 w-80 -translate-x-1/2" />
 		</RadixToast.Provider>
 	)
 }
@@ -66,9 +71,10 @@ const Toast = forwardRef<
 	{
 		onClose: () => void
 		text: string
+		type: AlertType
 	}
->(function Toast({ onClose, text }, forwardedRef) {
-	const width = 320
+>(function Toast({ onClose, text, type }, forwardedRef) {
+	const height = 52
 	const margin = 16
 
 	return (
@@ -80,8 +86,8 @@ const Toast = forwardRef<
 			duration={2500}>
 			<motion.li
 				layout
-				initial={{ x: width + margin }}
-				animate={{ x: 0 }}
+				initial={{ y: -(height + margin) }}
+				animate={{ y: 0 }}
 				exit={{
 					opacity: 0,
 					zIndex: -1,
@@ -97,12 +103,14 @@ const Toast = forwardRef<
 					damping: 30,
 					stiffness: 200
 				}}
-				style={{ width, WebkitTapHighlightColor: "transparent" }}>
-				<div className="flex overflow-hidden justify-between items-center text-sm text-emerald-700 whitespace-nowrap bg-emerald-100 border border-emerald-600 shadow-md backdrop-blur">
+				className="md:w-96 mx-4 w-80"
+				style={{ WebkitTapHighlightColor: "transparent" }}>
+				<div className={`alert-${type} flex justify-between items-center p-0`}>
 					<RadixToast.Description className="p-4 truncate">
 						{text}
 					</RadixToast.Description>
-					<RadixToast.Close className="border-emerald-600/50 hover:bg-emerald-200 hover:text-emerald-800 active:text-white p-4 text-emerald-700 border-l transition cursor-pointer">
+					<RadixToast.Close
+						className={`border-${type}-dark hover:bg-${type}-200 text-${type}-dark p-4 border-l transition-all cursor-pointer`}>
 						X
 					</RadixToast.Close>
 				</div>
