@@ -7,9 +7,9 @@ export function AddStageBtn({ workflowId }: { workflowId: number }) {
 	return (
 		<Popover.Root modal>
 			<Popover.Trigger asChild>
-				<button className="hover:opacity-100 dark:bg-slate-800 md:-right-12 md:top-1/2 md:-translate-y-1/2 md:translate-x-0 absolute -bottom-12 right-1/2 w-10 h-10 bg-white rounded-full border shadow opacity-80 transition-all translate-x-1/2 cursor-pointer">
-					+
-				</button>
+				{/* @TODO: styles for when this is put right next to stage panels */}
+				{/* <button className="hover:opacity-100 dark:bg-slate-800 md:-right-12 md:top-1/2 md:-translate-y-1/2 md:translate-x-0 absolute -bottom-12 right-1/2 w-10 h-10 bg-white rounded-full border shadow opacity-80 transition-all translate-x-1/2 cursor-pointer"> */}
+				<button className="btn-primary">Add stage +</button>
 			</Popover.Trigger>
 			<Popover.Portal>
 				<AnimatePresence>

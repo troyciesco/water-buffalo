@@ -9,6 +9,7 @@ import { NotFound } from "@/components/not-found"
 import { StageForm } from "@/components/stage-form"
 import { PageHeader } from "@/components/page-header"
 import { StagePanel } from "@/components/stage-panel"
+import { AddStageBtn } from "@/components/add-stage-btn"
 
 export function WorkflowPage() {
 	const params = useParams()
@@ -37,8 +38,11 @@ export function WorkflowPage() {
 
 	return (
 		<div className="flex flex-col h-full">
-			<PageHeader title={`Workflow: ${workflow.name}`} />
-			<div className="grow bg-light dark:bg-dark dotted-bg overflow-y-scroll pb-10 md:pb-0 p-4 h-[calc(100svh-57px-69px-33px)] md:h-[calc(100svh-81px-81px-57px)]">
+			<PageHeader
+				title={`Workflow: ${workflow.name}`}
+				action={<AddStageBtn workflowId={workflow.id} />}
+			/>
+			<div className="grow bg-light dark:bg-dark dotted-bg overflow-y-scroll pb-10 md:pb-0 p-4 h-[calc(100svh-81px-81px-57px)]">
 				{workflow.stages.length === 0 ? (
 					<StageForm key={workflow.id} workflowId={workflow.id} />
 				) : (
