@@ -14,12 +14,12 @@ export function Content({
 	onDoubleClick
 }: ContentProps) {
 	return (
-		<div className="p-4">
+		<div className="md:p-4 p-1 max-h-[380px] overflow-y-scroll">
 			{/* {loading && <div>loading</div>}
     {error && <div>error :(</div>} */}
-			<div className="grid grid-cols-2 gap-8">
+			<div className="md:grid-cols-2 md:gap-8 grid gap-2">
 				{items.length === 0 && (
-					<div className="col-span-2 w-[712px] max-w-full">
+					<div className="md:col-span-2 md:w-[712px] max-w-full">
 						No items match the search criteria
 					</div>
 				)}
@@ -33,10 +33,12 @@ export function Content({
 						}`}
 						onClick={() => onClick(item)}
 						onDoubleClick={() => onDoubleClick(item)}>
-						<div className="w-20 h-20 bg-gray-200 border"></div>
+						<div className="max-w-15 h-15 md:w-20 md:h-20 md:max-w-20 w-full bg-gray-200 border"></div>
 						<div className="text-left">
-							<div className="text-lg font-bold">{item.name}</div>
-							<div className="w-[240px] text-balance">{item.description}</div>
+							<div className="md:text-lg font-bold">{item.name}</div>
+							<div className="md:w-[240px] text-balance text-sm md:text-base">
+								{item.description}
+							</div>
 						</div>
 					</button>
 				))}

@@ -20,7 +20,7 @@ export function WorkflowsPage() {
 				}
 			/>
 			<div className="grow max-h-[calc(100vh-81px-81px-57px)] overflow-y-scroll p-4 h-full">
-				<ul className="grid grid-cols-6 gap-4">
+				<ul className="md:grid-cols-6 grid grid-cols-2 gap-4">
 					{workflows.map((workflow) => (
 						<li
 							key={workflow.id}

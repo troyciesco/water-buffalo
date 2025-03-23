@@ -10,7 +10,8 @@ export function SideNav() {
 	const workflows = data?.allWorkflows || []
 
 	return (
-		<aside className="w-60 h-[calc(100svh-81px-57px)] border-r divide-y divide-gray-400 overflow-y-scroll">
+		// @TODO: either scroll or dropdown for when there's dozens of workflows
+		<aside className="hidden md:block w-60 h-[calc(100svh-81px-57px)] border-r divide-y divide-gray-400 overflow-y-hidden">
 			<div className="py-4 pr-16 pl-4">
 				<Link to="/dashboard" className="hover:underline font-bold">
 					Dashboard

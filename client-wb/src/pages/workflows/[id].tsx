@@ -38,11 +38,11 @@ export function WorkflowPage() {
 	return (
 		<div className="flex flex-col h-full">
 			<PageHeader title={`Workflow: ${workflow.name}`} />
-			<div className="grow bg-light dark:bg-dark dotted-bg p-4">
+			<div className="grow bg-light dark:bg-dark dotted-bg overflow-y-scroll pb-10 md:pb-0 p-4 h-[calc(100svh-57px-69px-33px)] md:h-[calc(100svh-81px-81px-57px)]">
 				{workflow.stages.length === 0 ? (
 					<StageForm key={workflow.id} workflowId={workflow.id} />
 				) : (
-					<div className="grid grid-cols-5 gap-8 w-full">
+					<div className="md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-8 grid w-full">
 						{workflow.stages.map((stage, index) => (
 							<StagePanel
 								key={`${stage.id}-${stage.name}`}

@@ -1,7 +1,7 @@
 export function Footer() {
 	return (
-		<footer className="p-4 border-t">
-			<div>Built with 🍕 in Boston</div>
+		<footer className="md:p-4 p-2 border-t">
+			<div className="md:text-base text-xs">Built with 🍕 in Boston</div>
 		</footer>
 	)
 }

@@ -1,5 +1,4 @@
 import { AnimatePresence, Reorder } from "motion/react"
-import { AddStageBtn } from "@/components/add-stage-btn"
 import { GetWorkflowQuery } from "@/__generated__/graphql"
 
 type Stage = NonNullable<
@@ -8,14 +7,14 @@ type Stage = NonNullable<
 
 type StagePanelProps = {
 	stage: Stage
-	workflowId: number
-	isLastStage: boolean
+	workflowId?: number
+	isLastStage?: boolean
 	onClick: (stageId: number) => void
 }
 export function StagePanel({
 	stage,
-	workflowId,
-	isLastStage,
+	// workflowId,
+	// isLastStage,
 	onClick
 }: StagePanelProps) {
 	return (
@@ -30,6 +29,7 @@ export function StagePanel({
 					<Reorder.Group
 						axis="y"
 						values={stage.steps}
+						// @TODO: implement reordering with api
 						// onReorder={setItems}
 						onReorder={() => {}}
 						className="flex flex-col space-y-2">
@@ -47,7 +47,8 @@ export function StagePanel({
 							))}
 						</AnimatePresence>
 					</Reorder.Group>
-					{isLastStage && <AddStageBtn workflowId={workflowId} />}
+					{/* @TODO: implement when overflow-x for the stage area is implemented */}
+					{/* {isLastStage && <AddStageBtn workflowId={workflowId} />} */}
 				</>
 			)}
 			<button
