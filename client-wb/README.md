@@ -8,6 +8,7 @@ This is the frontend portion of the Water Buffalo Workflow Builder application. 
   - [Development](#development)
 - [Getting Started](#getting-started)
 - [Available Scripts](#available-scripts)
+- [GraphQL](#graphql)
 - [Routes and Features](#routes-and-features)
   - [/ and /login](#-and-login)
   - [/dashboard](#dashboard)
@@ -63,6 +64,14 @@ The application will start on port 5173.
 - `npm run gql:compile` - Generate GraphQL types
 - `npm run gql:watch` - Watch and generate GraphQL types
 - `npm run cy:open` - Open Cypress test runner
+
+## GraphQL
+The steps for working with GraphQL queries and mutations (see [src/queries/index.ts](src/queries/index.ts)) in this repo are:
+- create the query/mutation
+- run `npm run gql:compile` to compile the schema
+- this will compile the schema against the backend, throwing any errors that might exist in your queries
+  - you can also keep `npm run gql:watch` running, though I don't typically since I don't update queries too often
+- your query results should be typesafe now, and you can see some examples of helper types in [src/types.ts](src/types.ts).
 
 ## Routes and Features
 
