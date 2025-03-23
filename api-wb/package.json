@@ -7,7 +7,7 @@
 	"scripts": {
 		"dev": "pylon dev -c \"node --enable-source-maps .pylon/index.js\"",
 		"build": "pylon build",
-		"seed": "bunx prisma migrate reset --force && bun prisma/seed.ts"
+		"seed": "npx prisma migrate reset --force && tsx prisma/seed.ts"
 	},
 	"dependencies": {
 		"@getcronit/prisma-extended-models": "^0.0.42",
@@ -18,7 +18,8 @@
 	},
 	"devDependencies": {
 		"@getcronit/pylon-dev": "^1.0.0",
-		"@types/node": "^22.13.11"
+		"@types/node": "^22.13.11",
+		"tsx": "^4.19.3"
 	},
 	"repository": {
 		"type": "git",

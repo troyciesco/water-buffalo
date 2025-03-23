@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@theme {
+@theme static {
 	--font-mono: "Atkinson Hyperlegible Mono", monospace;
 
 	--color-primary-50: oklch(98.37% 0.011 174.86); /* #eefffa */
@@ -32,10 +32,10 @@
 	--color-error-light: var(--color-red-100);
 	--color-error-dark: var(--color-red-700);
 
-	--color-success-200: var(--color-emerald-200);
-	--color-success-base: var(--color-emerald-500);
-	--color-success-light: var(--color-emerald-100);
-	--color-success-dark: var(--color-emerald-900);
+	--color-success-200: var(--color-green-200);
+	--color-success-base: var(--color-green-500);
+	--color-success-light: var(--color-green-100);
+	--color-success-dark: var(--color-green-900);
 
 	--color-info-200: var(--color-primary-200);
 	--color-info-700: var(--color-primary-700);
@@ -63,6 +63,7 @@ body {
 @utility alert-success {
 	@apply bg-success-light text-success-dark p-4 border mt-4 text-sm border-success-dark;
 }
+
 @utility alert-error {
 	@apply bg-error-light text-error-dark p-4 border mt-4 text-sm border-error-dark;
 }
