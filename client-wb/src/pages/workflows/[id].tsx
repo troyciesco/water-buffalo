@@ -40,7 +40,14 @@ export function WorkflowPage() {
 		<div className="flex flex-col h-full">
 			<PageHeader
 				title={`Workflow: ${workflow.name}`}
-				action={<AddStageBtn workflowId={workflow.id} />}
+				action={
+					<>
+						{workflow.stages.length > 0 &&
+							workflow.stages[workflow.stages.length - 1].steps.length > 0 && (
+								<AddStageBtn workflowId={workflow.id} />
+							)}
+					</>
+				}
 			/>
 			<div className="grow bg-light dark:bg-dark dotted-bg overflow-y-scroll pb-10 md:pb-0 p-4 h-[calc(100svh-81px-81px-57px)]">
 				{workflow.stages.length === 0 ? (
@@ -71,12 +78,10 @@ export function WorkflowPage() {
 								item &&
 								createStep({
 									variables: {
-										payload: {
-											name: item.name,
-											description: item.description,
-											stageId: stagePendingStep,
-											categoryId: item.category
-										}
+										name: item.name,
+										description: item.description,
+										stageId: stagePendingStep,
+										categoryId: item.category
 									}
 								})
 							}

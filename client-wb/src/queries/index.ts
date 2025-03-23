@@ -12,15 +12,6 @@ export const GET_ALL_WORKFLOWS = gql(/* GraphQL */ `
 	}
 `)
 
-export const CREATE_WORKFLOW = gql(/* GraphQL */ `
-	mutation CreateWorkflow($payload: PayloadInput!) {
-		createWorkflow(payload: $payload) {
-			id
-			name
-		}
-	}
-`)
-
 export const GET_WORKFLOW = gql(/* GraphQL */ `
 	query GetWorkflow($id: Number!) {
 		workflowById(id: $id) {
@@ -54,9 +45,18 @@ export const GET_ALL_CATEGORIES = gql(/* GraphQL */ `
 	}
 `)
 
+export const CREATE_WORKFLOW = gql(/* GraphQL */ `
+	mutation CreateWorkflow($name: String!) {
+		createWorkflow(name: $name) {
+			id
+			name
+		}
+	}
+`)
+
 export const CREATE_STAGE = gql(/* GraphQL */ `
-	mutation CreateStage($payload: PayloadInput_1!) {
-		createStage(payload: $payload) {
+	mutation CreateStage($name: String!, $workflowId: Number!) {
+		createStage(name: $name, workflowId: $workflowId) {
 			id
 			name
 		}
@@ -64,8 +64,20 @@ export const CREATE_STAGE = gql(/* GraphQL */ `
 `)
 
 export const CREATE_STEP = gql(/* GraphQL */ `
-	mutation CreateStep($payload: PayloadInput_2!) {
-		createStep(payload: $payload) {
+	mutation CreateStep(
+		$name: String!
+		$description: String!
+		$stageId: Number!
+		$categoryId: String!
+		$icon: String
+	) {
+		createStep(
+			name: $name
+			description: $description
+			stageId: $stageId
+			categoryId: $categoryId
+			icon: $icon
+		) {
 			id
 			name
 			order

@@ -7,7 +7,8 @@ export function useCreateWorkflow() {
 	const { showToast } = useToast()
 
 	const [createWorkflow] = useMutation(CREATE_WORKFLOW, {
-		variables: { payload: { name: faker.science.chemicalElement().name } },
+		// fun way to name and also get random failures to test toast component
+		variables: { name: faker.science.chemicalElement().name },
 		refetchQueries: [GET_ALL_WORKFLOWS],
 		onCompleted: (data) => {
 			showToast({

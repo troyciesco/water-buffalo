@@ -26,9 +26,7 @@ export function StageForm({
 		const formData = new FormData(e.currentTarget)
 		const stageName = formData.get("stageName")?.toString() || ""
 		createStage({
-			variables: {
-				payload: { name: stageName, workflowId }
-			}
+			variables: { name: stageName, workflowId }
 		})
 	}
 

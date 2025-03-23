@@ -4,9 +4,6 @@ import { prisma } from "~/prisma/client"
 
 export const graphql = {
 	Query: {
-		hello: () => {
-			return "Hello, world!"
-		},
 		allCategories: async () => {
 			return await prisma.category.findMany({
 				include: { items: { include: { tags: true } } }
@@ -21,11 +18,6 @@ export const graphql = {
 			})
 		},
 		allWorkflows: async () => {
-			// await new Promise((resolve) => setTimeout(resolve, 5000)) // Add 5s delay
-			// const error = Boolean(Math.round(Math.random()))
-			// if (error) {
-			// 	throw new ServiceError("hi", { code: "MEGA_ERROR", statusCode: 400 })
-			// }
 			return await prisma.workflow.findMany({
 				include: { stages: { include: { steps: true } } }
 			})
@@ -38,25 +30,21 @@ export const graphql = {
 		}
 	},
 	Mutation: {
-		createWorkflow: async (payload: { name: string }) => {
-			// note: apparently you can't destructure in a gql mutation arg so we do it here
-			const { name } = payload
+		createWorkflow: async (name: string) => {
 			return await prisma.workflow.create({ data: { name } })
 		},
-		createStage: async (payload: { name: string; workflowId: number }) => {
-			const { name, workflowId } = payload
+		createStage: async (name: string, workflowId: number) => {
 			return await prisma.stage.create({
 				data: { name, workflow: { connect: { id: workflowId } } }
 			})
 		},
-		createStep: async (payload: {
-			name: string
-			description: string
+		createStep: async (
+			name: string,
+			description: string,
+			stageId: number,
+			categoryId: string,
 			icon?: string
-			stageId: number
-			categoryId: string
-		}) => {
-			const { name, description, icon, stageId, categoryId } = payload
+		) => {
 			const currentLastStep = await prisma.step.findFirst({
 				where: { stageId },
 				orderBy: { order: "desc" }
