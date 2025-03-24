@@ -9,7 +9,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client"
 import { ToastProvider } from "./lib/toast"
 
 const client = new ApolloClient({
-	uri: import.meta.env.VITE_GRAPHQL_API_URL,
+	uri: "http://localhost:3000/graphql",
 	cache: new InMemoryCache()
 })
 
