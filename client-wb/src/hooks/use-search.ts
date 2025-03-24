@@ -1,16 +1,39 @@
-import { Category, Item } from "@/types"
+import { Category, Item, Tag } from "@/types"
 import { useEffect, useState } from "react"
 
 type UseSearchProps = {
 	items: Item[]
 	categories: Category[]
+	tags: Tag[]
 	selectedCategoryId: string
 	searchString: string
+}
+
+// assumes that tags/aliases should return true if string matches any part
+// i.e. searchString of "qc" would return tags with "qc" and "qc failed"
+const matchesTags = ({
+	searchString,
+	tags
+}: {
+	searchString: string
+	tags: Tag[]
+}) => {
+	console.log(tags)
+	return tags.some((tag) => {
+		if (tag.primary.toLowerCase().includes(searchString.toLowerCase())) {
+			return true
+		}
+
+		return tag.aliases.some((alias) =>
+			alias.toLowerCase().includes(searchString.toLowerCase())
+		)
+	})
 }
 
 export function useSearch({
 	items,
 	categories,
+	tags,
 	selectedCategoryId,
 	searchString
 }: UseSearchProps) {
@@ -31,12 +54,18 @@ export function useSearch({
 			initialItems = initialItems.filter(
 				(item) =>
 					item.name.toLowerCase().includes(searchString.toLowerCase()) ||
-					item.description.toLowerCase().includes(searchString.toLowerCase())
+					item.description.toLowerCase().includes(searchString.toLowerCase()) ||
+					matchesTags({
+						searchString,
+						tags: tags.filter((tag) =>
+							item.tags.some((itemTag) => itemTag.id === tag.id)
+						)
+					})
 			)
 		}
 
 		setFilteredItems(initialItems)
-	}, [items, categories, selectedCategoryId, searchString])
+	}, [items, categories, selectedCategoryId, searchString, tags])
 
 	return { filteredItems }
 }

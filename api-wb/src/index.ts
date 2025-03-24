@@ -27,6 +27,9 @@ export const graphql = {
 				where: { id },
 				include: { stages: { include: { steps: true } } }
 			})
+		},
+		allTags: async () => {
+			return await prisma.tag.findMany()
 		}
 	},
 	Mutation: {

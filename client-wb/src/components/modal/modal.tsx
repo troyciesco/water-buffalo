@@ -2,7 +2,7 @@ import { useMemo, useState } from "react"
 import { useQuery } from "@apollo/client"
 import { motion } from "motion/react"
 import { GetAllCategoriesQuery } from "@/__generated__/graphql"
-import { GET_ALL_CATEGORIES } from "@/queries"
+import { GET_ALL_CATEGORIES, GET_ALL_TAGS } from "@/queries"
 import { Overlay } from "./overlay"
 import { Sidebar } from "./sidebar"
 import { Content } from "./content"
@@ -22,6 +22,8 @@ export function Modal({
 	onSubmit: (item: Item | null) => void
 }) {
 	const { loading, error, data } = useQuery(GET_ALL_CATEGORIES)
+	// @TODO - a combined categories/tags query makes more sense, but need to clean up naming etc
+	const { data: tagData } = useQuery(GET_ALL_TAGS)
 
 	const items = useMemo(
 		() => data?.allCategories.map((c) => c.items).flat() || [],
@@ -31,17 +33,20 @@ export function Modal({
 		() => data?.allCategories || [],
 		[data?.allCategories]
 	)
+	const tags = useMemo(() => tagData?.allTags || [], [tagData?.allTags])
 
 	const [selectedCategoryId, setSelectedCategoryId] = useState("")
 	const [searchString, setSearchString] = useState("")
 	const { filteredItems } = useSearch({
 		items,
 		categories,
+		tags,
 		searchString,
 		selectedCategoryId
 	})
 
 	const [selectedItem, setSelectedItem] = useState<Item | null>(null)
+
 	const handleSubmit = () => {
 		onSubmit(selectedItem)
 		onClose()
@@ -59,7 +64,7 @@ export function Modal({
 				animate={{ opacity: 1, scale: 1, transition: { delay: 0.2 } }}
 				exit={{ opacity: 0, scale: 0.9 }}
 				className="relative z-20 mx-2">
-				<div className="dark:bg-dark clear-start bg-light flex gap-2 justify-between items-center p-2 border">
+				<div className="dark:bg-dark bg-light flex gap-2 justify-between items-center p-2 border">
 					<div className="md:text-2xl font-bold">Action Types</div>
 					<input
 						type="text"

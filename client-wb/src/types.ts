@@ -1,4 +1,4 @@
-import { GetAllCategoriesQuery } from "./__generated__/graphql"
+import { GetAllCategoriesQuery, GetAllTagsQuery } from "./__generated__/graphql"
 
 export type FormErrors<T extends string> = {
 	[K in T]?: string[]
@@ -11,3 +11,5 @@ export type Category = NonNullable<
 export type Item = NonNullable<
 	GetAllCategoriesQuery["allCategories"][number]["items"][number]
 >
+
+export type Tag = NonNullable<GetAllTagsQuery["allTags"][number]>

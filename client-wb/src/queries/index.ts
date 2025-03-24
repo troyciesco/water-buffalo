@@ -40,7 +40,20 @@ export const GET_ALL_CATEGORIES = gql(/* GraphQL */ `
 				name
 				description
 				category: categoryId
+				tags {
+					id
+				}
 			}
+		}
+	}
+`)
+
+export const GET_ALL_TAGS = gql(/* GraphQL */ `
+	query GetAllTags {
+		allTags {
+			id
+			primary
+			aliases
 		}
 	}
 `)

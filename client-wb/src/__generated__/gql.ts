@@ -16,7 +16,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 type Documents = {
     "\n\tquery GetAllWorkflows {\n\t\tallWorkflows {\n\t\t\tid\n\t\t\tname\n\t\t\tstages {\n\t\t\t\tid\n\t\t\t}\n\t\t}\n\t}\n": typeof types.GetAllWorkflowsDocument,
     "\n\tquery GetWorkflow($id: Number!) {\n\t\tworkflowById(id: $id) {\n\t\t\tid\n\t\t\tname\n\t\t\tstages {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tsteps {\n\t\t\t\t\tid\n\t\t\t\t\tname\n\t\t\t\t\torder\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n": typeof types.GetWorkflowDocument,
-    "\n\tquery GetAllCategories {\n\t\tallCategories {\n\t\t\tid\n\t\t\tname\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tdescription\n\t\t\t\tcategory: categoryId\n\t\t\t}\n\t\t}\n\t}\n": typeof types.GetAllCategoriesDocument,
+    "\n\tquery GetAllCategories {\n\t\tallCategories {\n\t\t\tid\n\t\t\tname\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tdescription\n\t\t\t\tcategory: categoryId\n\t\t\t\ttags {\n\t\t\t\t\tid\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n": typeof types.GetAllCategoriesDocument,
+    "\n\tquery GetAllTags {\n\t\tallTags {\n\t\t\tid\n\t\t\tprimary\n\t\t\taliases\n\t\t}\n\t}\n": typeof types.GetAllTagsDocument,
     "\n\tmutation CreateWorkflow($name: String!) {\n\t\tcreateWorkflow(name: $name) {\n\t\t\tid\n\t\t\tname\n\t\t}\n\t}\n": typeof types.CreateWorkflowDocument,
     "\n\tmutation CreateStage($name: String!, $workflowId: Number!) {\n\t\tcreateStage(name: $name, workflowId: $workflowId) {\n\t\t\tid\n\t\t\tname\n\t\t}\n\t}\n": typeof types.CreateStageDocument,
     "\n\tmutation CreateStep(\n\t\t$name: String!\n\t\t$description: String!\n\t\t$stageId: Number!\n\t\t$categoryId: String!\n\t\t$icon: String\n\t) {\n\t\tcreateStep(\n\t\t\tname: $name\n\t\t\tdescription: $description\n\t\t\tstageId: $stageId\n\t\t\tcategoryId: $categoryId\n\t\t\ticon: $icon\n\t\t) {\n\t\t\tid\n\t\t\tname\n\t\t\torder\n\t\t}\n\t}\n": typeof types.CreateStepDocument,
@@ -24,7 +25,8 @@ type Documents = {
 const documents: Documents = {
     "\n\tquery GetAllWorkflows {\n\t\tallWorkflows {\n\t\t\tid\n\t\t\tname\n\t\t\tstages {\n\t\t\t\tid\n\t\t\t}\n\t\t}\n\t}\n": types.GetAllWorkflowsDocument,
     "\n\tquery GetWorkflow($id: Number!) {\n\t\tworkflowById(id: $id) {\n\t\t\tid\n\t\t\tname\n\t\t\tstages {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tsteps {\n\t\t\t\t\tid\n\t\t\t\t\tname\n\t\t\t\t\torder\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n": types.GetWorkflowDocument,
-    "\n\tquery GetAllCategories {\n\t\tallCategories {\n\t\t\tid\n\t\t\tname\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tdescription\n\t\t\t\tcategory: categoryId\n\t\t\t}\n\t\t}\n\t}\n": types.GetAllCategoriesDocument,
+    "\n\tquery GetAllCategories {\n\t\tallCategories {\n\t\t\tid\n\t\t\tname\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tdescription\n\t\t\t\tcategory: categoryId\n\t\t\t\ttags {\n\t\t\t\t\tid\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n": types.GetAllCategoriesDocument,
+    "\n\tquery GetAllTags {\n\t\tallTags {\n\t\t\tid\n\t\t\tprimary\n\t\t\taliases\n\t\t}\n\t}\n": types.GetAllTagsDocument,
     "\n\tmutation CreateWorkflow($name: String!) {\n\t\tcreateWorkflow(name: $name) {\n\t\t\tid\n\t\t\tname\n\t\t}\n\t}\n": types.CreateWorkflowDocument,
     "\n\tmutation CreateStage($name: String!, $workflowId: Number!) {\n\t\tcreateStage(name: $name, workflowId: $workflowId) {\n\t\t\tid\n\t\t\tname\n\t\t}\n\t}\n": types.CreateStageDocument,
     "\n\tmutation CreateStep(\n\t\t$name: String!\n\t\t$description: String!\n\t\t$stageId: Number!\n\t\t$categoryId: String!\n\t\t$icon: String\n\t) {\n\t\tcreateStep(\n\t\t\tname: $name\n\t\t\tdescription: $description\n\t\t\tstageId: $stageId\n\t\t\tcategoryId: $categoryId\n\t\t\ticon: $icon\n\t\t) {\n\t\t\tid\n\t\t\tname\n\t\t\torder\n\t\t}\n\t}\n": types.CreateStepDocument,
@@ -55,7 +57,11 @@ export function gql(source: "\n\tquery GetWorkflow($id: Number!) {\n\t\tworkflow
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n\tquery GetAllCategories {\n\t\tallCategories {\n\t\t\tid\n\t\t\tname\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tdescription\n\t\t\t\tcategory: categoryId\n\t\t\t}\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery GetAllCategories {\n\t\tallCategories {\n\t\t\tid\n\t\t\tname\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tdescription\n\t\t\t\tcategory: categoryId\n\t\t\t}\n\t\t}\n\t}\n"];
+export function gql(source: "\n\tquery GetAllCategories {\n\t\tallCategories {\n\t\t\tid\n\t\t\tname\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tdescription\n\t\t\t\tcategory: categoryId\n\t\t\t\ttags {\n\t\t\t\t\tid\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery GetAllCategories {\n\t\tallCategories {\n\t\t\tid\n\t\t\tname\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tdescription\n\t\t\t\tcategory: categoryId\n\t\t\t\ttags {\n\t\t\t\t\tid\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n\tquery GetAllTags {\n\t\tallTags {\n\t\t\tid\n\t\t\tprimary\n\t\t\taliases\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery GetAllTags {\n\t\tallTags {\n\t\t\tid\n\t\t\tprimary\n\t\t\taliases\n\t\t}\n\t}\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
