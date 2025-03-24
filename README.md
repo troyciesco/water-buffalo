@@ -13,6 +13,11 @@ It does not have:
 - full CRUD functionality (no update or delete yet)
 - I haven't tested building and deploying it yet, so I don't know 100% if it works outside of locally
 
+## Video Walkthroughs
+I recorded a couple videos to show the UI and the code. They're very brief right now (Loom has a 5 min time limit) but I might expand on them in the future
+- App Walkthrough: in this video I very quickly run through the functionality of the application from the perspective of a user - [Watch video on Loom](https://www.loom.com/share/fbb014bdb4ec42c391e59b046b2a478f?sid=2ed2e482-769b-4a49-9d40-ae0a12fe4361)
+- Code Walkthrough: I spin up the app from a fresh git clone using `make from-scratch` and touch on some of the features of the React frontend and the Hono backend - [Watch video on Loom](https://www.loom.com/share/5cb25942297f412c951e8fa340b19761?sid=8a3aa57f-5e39-4cc6-8770-0470cf78202b)
+
 ## Requirements
 - `npm` and `node` installed
 - (optional) there's a Makefile to run both apps at once if you want and you have `make` installed
