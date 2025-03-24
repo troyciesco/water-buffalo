@@ -4,7 +4,7 @@ import "@fontsource/atkinson-hyperlegible-mono/400.css"
 import "@fontsource/atkinson-hyperlegible-mono/500.css"
 import "@fontsource/atkinson-hyperlegible-mono/700.css"
 import "@/assets/styles/globals.css"
-import { App } from "./app.tsx"
+import { App } from "./App"
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client"
 import { ToastProvider } from "./lib/toast"
 
